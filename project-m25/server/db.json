@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "username": "user123",
+      "email": "user@example.com",
+      "fullname": "Nguyen Van A",
+      "status": true,
+      "password": "hashed_password",
+      "role": true,
+      "avatar": "avatar1.png",
+      "phone": "0123456789",
+      "address": "123 Street, Hanoi",
+      "created_at": "05/09/2024",
+      "updated_at": "05/09/2024"
+    }
+  ],
+  "categories": [
+    {
+      "category_id": 1,
+      "category_name": "Electronics",
+      "description": "Electronic gadgets and devices",
+      "status": true
+    }
+  ],
+  "products": [
+    {
+      "product_id": 1,
+      "categoryId": 1, 
+      "product_name": "Aliquam Quaerat",
+      "description": "Latest model smartphone",
+      "unit_price": 799.99,
+      "stock_quantity": 100,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/02-278x320.jpg",
+      "created_at": "05/09/2024",
+      "updated_at": "05/09/2024"
+    }
+  ],
+  "orders": [
+    {
+      "order_id": 1,
+      "serial_number": "ORD001",
+      "user_id": 1,  
+      "order_at": "05/09/2024",
+      "total_price": 1599.98,
+      "status": 1,
+      "note": "Please deliver between 9 AM and 5 PM",
+      "order_details": [
+        {
+          "order_detail_id": 1,
+          "product_id": 1, 
+          "name": "Aliquam Quaerat",
+          "unit_price": 799.99,
+          "order_quantity": 2
+        }
+      ],
+      "receive_name": "Nguyen Van A",
+      "receive_address": "123 Street, Hanoi",
+      "receive_phone": "0123456789",
+      "created_at": "05/09/2024",
+      "updated_at": "05/09/2024"
+    }
+  ],
+  "order_details": [
+    {
+      "order_detail_id": 1,
+      "product_id": 1,  
+      "name": "Smartphone",
+      "unit_price": 799.99,
+      "order_quantity": 2,
+      "order_id": 1  
+    }
+  ]
+}
