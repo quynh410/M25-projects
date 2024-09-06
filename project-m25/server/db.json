@@ -1,10 +1,11 @@
 {
   "users": [
     {
-      "user_id": 1,
-      "username": "user123",
-      "email": "user@example.com",
-      "fullname": "Nguyen Van A",
+      "id":1,
+      "user_id": 56,
+      "username": "Quynh",
+      "email": "quynh@gmail.com",
+      "fullname": "Nguyễn Thị Thu Quỳnh",
       "status": true,
       "password": "hashed_password",
       "role": true,
@@ -12,7 +13,22 @@
       "phone": "0123456789",
       "address": "123 Street, Hanoi",
       "created_at": "05/09/2024",
-      "updated_at": "05/09/2024"
+      "updated_at": ""
+    },
+    {
+      "id":2,
+      "user_id": 57,
+      "username": "Hanh",
+      "email": "hanh@gmail.com",
+      "fullname": "Lê Hữu Hành",
+      "status": true,
+      "password": "hashed_password",
+      "role": true,
+      "avatar": "avatar2.png",
+      "phone": "0987654321",
+      "address": "456 Street, Hà Nội",
+      "created_at": "05/09/2024",
+      "updated_at": ""
     }
   ],
   "categories": [
