@@ -1,7 +1,14 @@
 {
+  "admin": [
+    {
+      "id": 1,
+      "email": "quynh1@gmail.com",
+      "password": "quynh"
+    }
+  ],
   "users": [
     {
-      "id":1,
+      "id": 1,
       "user_id": 56,
       "username": "Quynh",
       "email": "quynh@gmail.com",
@@ -9,14 +16,14 @@
       "status": true,
       "password": "hashed_password",
       "role": true,
-      "avatar": "avatar1.png",
+      "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
       "phone": "0123456789",
       "address": "123 Street, Hanoi",
       "created_at": "05/09/2024",
       "updated_at": ""
     },
     {
-      "id":2,
+      "id": 2,
       "user_id": 57,
       "username": "Hanh",
       "email": "hanh@gmail.com",
@@ -24,39 +31,195 @@
       "status": true,
       "password": "hashed_password",
       "role": true,
-      "avatar": "avatar2.png",
+      "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
       "phone": "0987654321",
       "address": "456 Street, Hà Nội",
-      "created_at": "05/09/2024",
+      "created_at": "04/09/2024",
       "updated_at": ""
     }
   ],
   "categories": [
     {
+      "id": 1,
       "category_id": 1,
-      "category_name": "Electronics",
-      "description": "Electronic gadgets and devices",
-      "status": true
+      "category_name": "Sculpture",
+      "description": "Elaborately carved walls very beautifull",
+      "status": "Mở Khóa"
+    },
+    {
+      "id": 2,
+      "category_id": 2,
+      "category_name": "Maquette",
+      "description": "Beautiful art form",
+      "status": "Không mở khóa"
+    },
+    {
+      "id": 3,
+      "category_id": 3,
+      "category_name": "Figurines",
+      "description": "Very nice statue",
+      "status": "Mở Khóa"
     }
   ],
   "products": [
     {
-      "product_id": 1,
-      "categoryId": 1, 
+      "id": 1,
+      "product_id": 1001,
+      "categoryId": 1,
       "product_name": "Aliquam Quaerat",
-      "description": "Latest model smartphone",
-      "unit_price": 799.99,
-      "stock_quantity": 100,
+      "description": "This is the description for product 1.",
+      "unit_price": "$108.80",
+      "rating": "★★★★☆",
+      "stock_quantity": 50,
       "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/02-278x320.jpg",
+      "created_at": "09/09/2024",
+      "update_at": "10/09/2024"
+    },
+    {
+      "id": 2,
+      "product_id": 1002,
+      "categoryId": 2,
+      "product_name": "Consectetur Hampden",
+      "description": "This is the description for product 2.",
+      "unit_price": "$110.00",
+      "discount": "8% Off",
+      "rating": "☆☆☆☆☆",
+      "stock_quantity": 30,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
+      "created_at": "08/09/2024",
+      "update_at": "10/09/2024"
+    },
+    {
+      "id": 3,
+      "product_id": 1003,
+      "categoryId": 1,
+      "product_name": "Laborum Eveniet",
+      "description": "This is the description for product 3.",
+      "unit_price": "$97.99",
+      "rating": "★★★☆☆",
+      "stock_quantity": 20,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/06-278x320.jpg",
+      "created_at": "07/09/2024",
+      "update_at": "09/09/2024"
+    },
+    {
+      "id": 4,
+      "product_id": 1004,
+      "categoryId": 2,
+      "product_name": "Commodi Consequatur",
+      "description": "This is the description for product 4.",
+      "unit_price": "$123.99",
+      "discount": "2% Off",
+      "rating": "☆☆☆☆☆",
+      "stock_quantity": 10,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/03-278x320.jpg",
+      "created_at": "06/09/2024",
+      "update_at": "08/09/2024"
+    },
+    {
+      "id": 5,
+      "product_id": 1005,
+      "categoryId": 1,
+      "product_name": "Exercitat Virginia",
+      "description": "This is the description for product 5.",
+      "unit_price": "$104.99",
+      "discount": "5% Off",
+      "rating": "★★★★☆",
+      "stock_quantity": 5,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/05-278x320.jpg",
       "created_at": "05/09/2024",
-      "updated_at": "05/09/2024"
+      "update_at": "07/09/2024"
+    },
+    {
+      "id": 6,
+      "product_id": 1006,
+      "categoryId": 2,
+      "product_name": "Laudant Doloremque",
+      "description": "This is the description for product 6.",
+      "unit_price": "$92.00",
+      "discount": "5% Off",
+      "rating": "★★★★★",
+      "stock_quantity": 3,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/08-278x320.jpg",
+      "created_at": "04/09/2024",
+      "update_at": "06/09/2024"
+    },
+    {
+      "id": 7,
+      "product_id": 1007,
+      "categoryId": 1,
+      "product_name": "Necessitatibus",
+      "description": "This is the description for product 7.",
+      "unit_price": "$119.60",
+      "discount": "10% Off",
+      "rating": "★★★★★",
+      "stock_quantity": 15,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/09-278x320.jpg",
+      "created_at": "03/09/2024",
+      "update_at": "05/09/2024"
+    },
+    {
+      "id": 8,
+      "product_id": 1008,
+      "categoryId": 2,
+      "product_name": "Nostrud Exerciation",
+      "description": "This is the description for product 8.",
+      "unit_price": "$129.99",
+      "discount": "15% Off",
+      "rating": "★☆☆☆☆",
+      "stock_quantity": 10,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/11-278x320.jpg",
+      "created_at": "02/09/2024",
+      "update_at": "04/09/2024"
+    },
+    {
+      "id": 9,
+      "product_id": 1009,
+      "categoryId": 1,
+      "product_name": "Occasion Praesentium",
+      "description": "This is the description for product 9.",
+      "unit_price": "$105.20",
+      "discount": "2% Off",
+      "rating": "★★★☆☆",
+      "stock_quantity": 5,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/12-278x320.jpg",
+      "created_at": "01/09/2024",
+      "update_at": "03/09/2024"
+    },
+    {
+      "id": 10,
+      "product_id": 1010,
+      "categoryId": 2,
+      "product_name": "Praesentium Voluptatum",
+      "description": "This is the description for product 10.",
+      "unit_price": "$149.99",
+      "discount": "11% Off",
+      "rating": "★★★★☆",
+      "stock_quantity": 20,
+      "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/13-278x320.jpg",
+      "created_at": "31/08/2024",
+      "update_at": "01/09/2024"
+    },
+    {
+      "id": 11,
+      "product_id": 1011,
+      "categoryId": 1,
+      "product_name": "Japan Black Cutlery",
+      "description": "This is the description for product 11.",
+      "unit_price": "$89.99",
+      "discount": "3% Off",
+      "rating": "★★★★☆",
+      "stock_quantity": 15,
+      "image": "https://bizweb.dktcdn.net/100/447/644/products/d9c3cd0a-aba1-452c-b2aa-faf6e03211c0.jpg?v=1644572917580",
+      "created_at": "30/08/2024",
+      "update_at": "01/09/2024"
     }
   ],
   "orders": [
     {
       "order_id": 1,
       "serial_number": "ORD001",
-      "user_id": 1,  
+      "user_id": 1,
       "order_at": "05/09/2024",
       "total_price": 1599.98,
       "status": 1,
@@ -64,7 +227,7 @@
       "order_details": [
         {
           "order_detail_id": 1,
-          "product_id": 1, 
+          "product_id": 1,
           "name": "Aliquam Quaerat",
           "unit_price": 799.99,
           "order_quantity": 2
@@ -80,11 +243,11 @@
   "order_details": [
     {
       "order_detail_id": 1,
-      "product_id": 1,  
+      "product_id": 1,
       "name": "Smartphone",
       "unit_price": 799.99,
       "order_quantity": 2,
-      "order_id": 1  
+      "order_id": 1
     }
   ]
 }

@@ -1,18 +1,31 @@
-"use client"
-import { useState } from 'react';
-import Link from 'next/link';
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const router = useRouter();
+  const [admin, setAdmin] = useState<any>([]);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  useEffect(() => {
+    const adminData = localStorage.getItem("admin");
+    if (!adminData) {
+      router.push("/loginAdmin");
+    } else {
+      setAdmin(JSON.parse(adminData));
+    }
+  }, []);
 
   const handleLogoutClick = () => {
     setShowLogoutModal(true);
   };
 
   const handleConfirmLogout = () => {
-    // Thực hiện hành động đăng xuất
     console.log("User logged out");
     setShowLogoutModal(false);
+    localStorage.removeItem("admin");
+    setAdmin(null);
   };
 
   const handleCancelLogout = () => {
@@ -25,24 +38,32 @@ export default function Sidebar() {
         <div className="flex items-center justify-center mt-10">
           <img
             className="h-16 w-16 rounded-full"
-            src="https://e3.365dm.com/22/11/2048x1152/skynews-avatar-water-trailer_5952118.jpg?20221102145501"
+            src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/7f2366302a6a5fc11d69fc079eaf2f19.jpeg?lk3s=30310797&nonce=81524&refresh_token=c66c10deaafcbfa6beec7d45f1c908ff&x-expires=1725987600&x-signature=o0RAMZMAFlCFswriYCgh0zQIf6o%3D&shp=30310797&shcp=-"
             alt="Avatar"
           />
         </div>
-        <div className="text-center text-xl mt-4">Admin</div>
+        <div className="text-center text-xl mt-4">Quynh</div>
         <div className="mt-10">
-          <Link href="/dashboard">
-            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</p>
-          </Link>
-          <Link href="/categories">
-            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Quản lý danh mục</p>
-          </Link>
-          <Link href="/products">
-            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Danh sách sản phẩm</p>
-          </Link>
-          <Link href="/users">
-            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Quản lý người dùng</p>
-          </Link>
+          <a href="/dashboard" className="no-underline">
+            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 text-white no-underline">
+              Dashboard
+            </p>
+          </a>
+          <a href="/categories" className="no-underline">
+            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 text-white no-underline">
+              Quản lý danh mục
+            </p>
+          </a>
+          <a href="/products" className="no-underline">
+            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 text-white no-underline">
+              Danh sách sản phẩm
+            </p>
+          </a>
+          <a href="/users" className="no-underline">
+            <p className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 text-white no-underline">
+              Quản lý người dùng
+            </p>
+          </a>
           <button
             onClick={handleLogoutClick}
             className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 w-full text-left"
@@ -65,12 +86,12 @@ export default function Sidebar() {
                 Hủy
               </button>
               <Link href="/loginAdmin">
-              <button
-                onClick={handleConfirmLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Đăng xuất
-              </button>
+                <button
+                  onClick={handleConfirmLogout}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Đăng xuất
+                </button>
               </Link>
             </div>
           </div>

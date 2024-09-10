@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/app/(admin)/header/page";
 import Sidebar from "@/app/(admin)/sidebar/page";
-import { FaDollarSign, FaUsers, FaShoppingCart } from 'react-icons/fa';
+import { FaDollarSign, FaUsers, FaShoppingCart } from "react-icons/fa";
 import Card from "./Card";
 import Chart from "./Chart";
 
@@ -24,13 +24,13 @@ export default function Dashboard() {
               title="Visitors"
               value="12,302"
               change="+12.7% +1.2k this week"
-              icon={<FaUsers/>}
+              icon={<FaUsers />}
             />
             <Card
               title="Order"
               value="963"
               change="-12.7% -213"
-              icon={<FaShoppingCart  />}
+              icon={<FaShoppingCart />}
             />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

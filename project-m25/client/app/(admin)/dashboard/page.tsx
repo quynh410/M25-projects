@@ -1,10 +1,10 @@
-'use client'
-import { FaDollarSign, FaUsers, FaShoppingCart } from 'react-icons/fa';
+"use client";
+import { FaDollarSign, FaUsers, FaShoppingCart } from "react-icons/fa";
 
-import Sidebar from '../sidebar/page';
-import Header from '../header/page';
-import Card from '../adminHome/Card';
-import Chart from '../adminHome/Chart';
+import Sidebar from "../sidebar/page";
+import Header from "../header/page";
+import Card from "../adminHome/Card";
+import Chart from "../adminHome/Chart";
 
 export default function Dashboard() {
   return (
@@ -25,13 +25,13 @@ export default function Dashboard() {
               title="Visitors"
               value="12,302"
               change="+12.7% +1.2k this week"
-              icon={<FaUsers/>}
+              icon={<FaUsers />}
             />
             <Card
               title="Order"
               value="963"
               change="-12.7% -213"
-              icon={<FaShoppingCart  />}
+              icon={<FaShoppingCart />}
             />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
