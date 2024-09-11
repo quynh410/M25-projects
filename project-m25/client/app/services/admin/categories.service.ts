@@ -13,3 +13,7 @@ export const deleteCate:any  = createAsyncThunk("categories/deleteCate",
         return id;
     }
 )
+export const addCate:any = createAsyncThunk("categories/addCate", async (cate:any)=>{
+    let response = await axios.post(`http://localhost:8080/categories`,cate)
+    return response.data;
+})

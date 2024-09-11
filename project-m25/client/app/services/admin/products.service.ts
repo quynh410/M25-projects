@@ -34,3 +34,11 @@ export const deleteProducts:any = createAsyncThunk("products/deleteProduct",
         let response =  await axios.post(`http://localhost:8080/products`, product);
         return response.data;
 })
+// lấy 1 id sản phẩm
+
+export const getProductById:any = createAsyncThunk("products/getProductById", async (id: number) => {
+    let response = await axios.get(`http://localhost:8080/products/${id}`);
+    return response.data;
+
+})
+ // thêm sản phẩm vào gi�� hàng

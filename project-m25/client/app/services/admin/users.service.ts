@@ -30,3 +30,9 @@ export const sortUser:any = createAsyncThunk("users/sortUser", async (order: 'as
     let response = await axios.get(`http://localhost:8080/users?_sort=username&_order=${order}`);
     return response.data;
 })
+// API cập nhật trạng thái user
+export const statusUser: any=createAsyncThunk("user/statusUser", async(data:any)=>{
+    const response= await axios.patch(` http://localhost:8080/users/${data.id}`,data)
+    return response.data
+})
+

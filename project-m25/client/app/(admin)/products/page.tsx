@@ -270,7 +270,7 @@ export default function Products() {
                   </button>
                   <button
                     className="bg-red-500 text-white py-1 px-2 rounded"
-                    onClick={() => handleDelete(product.product_id)}
+                    onClick={() => handleDelete(product.id)}
                   >
                     Xóa
                   </button>

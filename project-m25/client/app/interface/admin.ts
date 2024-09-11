@@ -4,7 +4,7 @@ export interface Admin{
     username:string,
     email:string,
     fullName:string,
-    status:boolean,
+    status:number,
     password:string,
     role:boolean,
     avatar:string,
@@ -20,4 +20,7 @@ export interface Account{
     email: string,
     address: string
     created_at: string
+    phone:string
+    fullname:string
+    status:boolean
 }

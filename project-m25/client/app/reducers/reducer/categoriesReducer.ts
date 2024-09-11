@@ -1,5 +1,5 @@
 import { Categories } from "@/app/interface/categories";
-import { deleteCate, getAllCate } from "@/app/services/admin/categories.service";
+import { addCate, deleteCate, getAllCate } from "@/app/services/admin/categories.service";
 import { createSlice } from "@reduxjs/toolkit";
 
 const categoriesState:Categories[]=[];
@@ -19,6 +19,9 @@ const categoriesReducer = createSlice({
             state.categories = state.categories.filter((category:Categories)=> {
                 return category.id!== action.payload
             })
+        })
+        .addCase(addCate.fulfilled,(state,action)=>{
+            state.categories.push(action.payload);
         })
     }
 })

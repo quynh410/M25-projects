@@ -1,13 +1,14 @@
 import { Products } from "@/app/interface/products";
-import { addProducts, deleteProducts, getAllProducts, searchProducts, sortProducts, updateProducts } from "@/app/services/admin/products.service";
+import { addProducts, deleteProducts, getAllProducts, getProductById, searchProducts, sortProducts, updateProducts } from "@/app/services/admin/products.service";
 import { createSlice } from "@reduxjs/toolkit";
 
 const productState:Products[]= []
 
 const productReducer = createSlice({
-    name:"producta",
+    name:"products",
     initialState:{
         products:productState,
+        productDetail: {}
     },
     reducers:{},
     extraReducers: (builder) => {
@@ -26,15 +27,18 @@ const productReducer = createSlice({
            })
         })
         .addCase(updateProducts.fulfilled ,(state, action)=>{
+            state.productDetail = action.payload;
+        })
+        .addCase(addProducts.fulfilled,(state,action)=>{
+            state.products.push(action.payload)
+        })
+        .addCase(getProductById.fulfilled ,(state, action)=>{
             let index = state.products.findIndex((product:any)=>{
                 return product.product_id === action.payload.product_id
             })
             if(index!== -1){
                 state.products[index] = action.payload
             }
-        })
-        .addCase(addProducts.fulfilled,(state,action)=>{
-            state.products.push(action.payload)
         })
     }
 })

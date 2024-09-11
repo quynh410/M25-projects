@@ -3,5 +3,5 @@ export interface Categories {
     category_id: number,
     category_name: string,
     description: string,
-    status:string
+    created_at:string,
 }

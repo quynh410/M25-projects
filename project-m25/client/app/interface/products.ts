@@ -11,4 +11,7 @@ export interface Products {
     created_at:string,
     update_at:string
     discount:string
+    brand: string,
+    product_code: string,
+    availability: string,
 }

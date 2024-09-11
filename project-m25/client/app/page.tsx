@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -10,45 +10,35 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
-const products = [
-  {
-    id: 1,
-    name: "Aliquam Quaerat",
-    price: "$108.80",
-    rating: "★★★★☆",
-    imageUrl:
-      "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/02-278x320.jpg",
-  },
-  {
-    id: 2,
-    name: "Consectetur Hampden",
-    price: "$110.00",
-    originalPrice: "$119.60",
-    discount: "8% Off",
-    rating: "☆☆☆☆☆",
-    imageUrl:
-      "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
-  },
-  {
-    id: 3,
-    name: "Laborum Eveniet",
-    price: "$97.99",
-    rating: "★★★☆☆",
-    imageUrl:
-      "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/06-278x320.jpg",
-  },
-  {
-    id: 4,
-    name: "Necessitatibus",
-    price: "$119.60",
-    rating: "★★★★★",
-    imageUrl:
-      "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/09-278x320.jpg",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "./services/admin/products.service";
+import { Products } from "./interface/products";
 
 export default function Home() {
+  const products = useSelector((state: any) => state.productsReducer.products);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
+  // State cho pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+  // Lấy các sản phẩm của trang hiện tại
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  // Hàm thay đổi trang
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  // Số trang
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  // -------
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleForm = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <>
       <div className="relative ">
@@ -63,7 +53,13 @@ export default function Home() {
           </div>
           <div className="flex gap-4 mr-8">
             <i className="fa-solid fa-magnifying-glass"></i>
-            <i className="fa-regular fa-user"></i>
+            <i className="fa-regular fa-user" onClick={toggleForm}></i>
+            {isOpen && (
+              <div className="absolute mt-[20px] mr-11 p-2 b rounded shadow-lg">
+              <a className="block no-underline text-black hover:text-gray-200 cursor-pointer">Đăng Nhập</a>
+              <a className="block no-underline text-black hover:text-gray-200 cursor-pointer">Đăng Ký</a>
+          </div>
+            )}
             <i className="fa-solid fa-cart-shopping"></i>
           </div>
         </div>
@@ -181,25 +177,29 @@ export default function Home() {
         </div>
         <div className="flex justify-center p-10">
           <div className="flex flex-wrap justify-center gap-4">
-            {products.map((product) => (
+            {currentProducts.map((product: Products) => (
               <div key={product.id} className="bg-white p-4 w-[350px]">
                 <div className="overflow-hidden">
                   <img
-                    src={product.imageUrl}
-                    alt={product.name}
+                    src={product.image}
+                    alt=""
                     className="w-full  transition-transform duration-300 ease-in-out transform hover:scale-110"
                   />
                 </div>
                 <div className="text-yellow-500 text-sm mt-2">
                   {product.rating}
                 </div>
-                <h2 className="text-lg font-semibold mt-1">{product.name}</h2>
-                <div className="text-xl font-bold mt-2">{product.price}</div>
-                {product.originalPrice && (
+                <a href="/detailProducts" className="text-lg font-semibold mt-1">
+                  {product.product_name}
+                </a>
+                <div className="text-xl font-bold mt-2">
+                  {product.unit_price}
+                </div>
+                {product.unit_price && (
                   <div className="text-red-500 text-sm mt-1">
                     {product.discount}
                     <span className="line-through text-gray-600">
-                      {product.originalPrice}
+                      {product.unit_price}
                     </span>
                   </div>
                 )}
@@ -207,6 +207,50 @@ export default function Home() {
             ))}
           </div>
         </div>{" "}
+        <div className="flex justify-center items-center mt-8">
+          <ul className="flex space-x-2">
+            {/* Hiển thị nút Previous */}
+            <li>
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 border rounded ${
+                  currentPage === 1 ? "bg-gray-200" : "bg-white"
+                }`}
+              >
+                Previous
+              </button>
+            </li>
+
+            {/* Hiển thị các số trang */}
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => paginate(index + 1)}
+                  className={`px-4 py-2 border rounded ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            {/* Hiển thị nút Next */}
+            <li>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 border rounded ${
+                  currentPage === totalPages ? "bg-gray-200" : "bg-white"
+                }`}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
         <br /> <br />
         <div className="relative h-[540px]">
           <img
@@ -248,7 +292,6 @@ export default function Home() {
                           src="https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/blog-6-893x752.jpg"
                           alt=""
                         />
-                        
                       </CardContent>
                     </Card>
                   </div>
