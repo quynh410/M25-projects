@@ -1,6 +1,10 @@
-"use client"
+"use client";
+import { Account, Accounts } from "@/app/interface/admin";
+import { getAllUser } from "@/app/services/admin/users.service";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { Link, useNavigate } from "react-router-dom";
 // import { Account } from "../../interface/user";
 // import { useDispatch, useSelector } from "react-redux";
@@ -14,68 +18,86 @@ function validateEmail(email: any) {
     );
 }
 export default function Register() {
-//   const userState = useSelector((state: any) => state.userReducer.user);
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
+  const userState = useSelector((state: any) => state.userReducer.user);
+  const dispatch = useDispatch();
+  const [account, setAccount] = useState<Accounts>({
+    email: "",
+    password: "",
+  });
+  const [errorAccount, setErrorAccount] = useState({
+    email: "",
+    password: "",
+  });
+  const router = useRouter();
+  const handleSubmit = (e: React.FormEvent) => {
+    let valid = true;
+    e.preventDefault();
+    if (!account.email) {
+      setErrorAccount((prevErr: any) => ({
+        ...prevErr,
+        email: "Vui lòng nhập email",
+      }));
+      valid = false;
+    } else {
+      setErrorAccount((prevErr: any) => ({
+        ...prevErr,
+        email: "",
+      }));
+    }
+    if (!account.password) {
+      setErrorAccount((prevErr: any) => ({
+        ...prevErr,
+        password: "Vui lòng nhập mật khẩu",
+      }));
+      valid = false;
+    } else {
+      setErrorAccount((prevErr: any) => ({
+        ...prevErr,
+        password: "",
+      }));
+    }
 
-//   useEffect(() => {
-//     dispatch(getAllUser());
-//   }, []);
-//   const [account, setAccount] = useState<Account>({
-//     id: Math.ceil(Math.random() * 10000),
-//     email: "",
-//     password: "",
-//   });
+    if (valid && userState.length > 0) {
+      const findUser = userState.find(
+        (user: any) =>
+          user.email === account.email && user.password === account.password
+      );
+      console.log(findUser);
+      if (findUser) {
+        if (findUser.status === 1) {
+          alert("Tài khoản đã bị chặn!");
+        } else {
+          localStorage.setItem("account", JSON.stringify(findUser));
+          alert("Đăng nhập thành công");
+          router.push("/");
+        }
+      } else {
+        setErrorAccount((prevErr: any) => ({
+          ...prevErr,
+          password: "Tài khoản hoặc mật khẩu không đúng",
+        }));
+        valid = false;
+      }
+    }
+  };
 
-//   const [error, setError] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     let valid = true;
-//     if (!account.email) {
-//       error.email = "email không được để trống";
-//       valid = false;
-//     } else if (!validateEmail(account.email)) {
-//       error.email = "Email không đúng";
-//       valid = false;
-//     } else {
-//       error.email = "";
-//     }
-
-//     if (!account.password) {
-//       error.password = " Mật khẩu không để trống";
-//       valid = false;
-//     } else {
-//       error.password = "";
-//     }
-
-//     if (valid && userState.length > 0) {
-//       const findUser = userState.find(
-//         (item: any) =>
-//           item.email === account.email &&
-//           item.password === account.password &&
-//           item.status == 0
-//       );
-//       if (findUser) {
-//         localStorage.setItem("account", JSON.stringify(findUser));
-//         navigate("/");
-//       } else {
-//         error.password = "Email hoặc mật khẩu không đúng, hoặc đã bị khóa";
-//         valid = false;
-//       }
-//     }
-//     setError({ ...error });
-//   };
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setAccount({
-//       ...account,
-//       [name]: value,
-//     });
-//   };
+  useEffect(() => {
+    dispatch(getAllUser());
+  }, []);
+  // const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setAccount({
+  //     ...account,
+  //     [name]: value,
+  //   });
+  // };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAccount({
+      ...account,
+      [name]: value,
+    });
+  };
 
   return (
     <div className="relative flex justify-center items-center min-h-screen bg-gray-200 overflow-hidden">
@@ -103,25 +125,35 @@ export default function Register() {
           <h2 className="font-extrabold uppercase text-[30px] mb-6">
             Đăng nhập
           </h2>
-          <form >
+          <form onSubmit={handleSubmit}>
             <label htmlFor="email">E-Mail</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               name="email"
               type="text"
+              value={account.email}
+              onChange={handleChange}
               placeholder="Enter your email"
-            
-            />
-
+            /> 
+            {errorAccount.email && (
+              <span className="text-red-500 text-[12px]">
+                {errorAccount.email}
+              </span>
+            )} <br />
             <label htmlFor="password">Password</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               name="password"
               type="password"
+              onChange={handleChange}
+              value={account.password}
               placeholder="Enter your password"
-           
             />
-          
+            {errorAccount.password && (
+              <span className="text-red-500 text-[12px]">
+                {errorAccount.password}
+              </span>
+            )}
             <button
               type="submit"
               className="bg-blue-600 border-none rounded text-white w-full h-[40px] mb-6"

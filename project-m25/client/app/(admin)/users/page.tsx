@@ -14,6 +14,7 @@ import { Account, Admin } from "@/app/interface/admin";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Pagination from 'react-bootstrap/Pagination';
 function validateEmail(email: any) {
   return String(email)
     .toLowerCase()
@@ -140,7 +141,6 @@ function Example({
             {err.fullname && (
               <p className="text-red-500 text-xs ml-[102px]">{err.fullname}</p>
             )}
-           
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -340,6 +340,23 @@ export default function Users() {
     dispatch(getAllUser());
     setselectedId(null);
   };
+  // ----------------------------------------------------------------
+  // State phân trang
+  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const usersPerPage = 5; // Số người dùng mỗi trang
+
+  // Tính toán số lượng trang dựa trên số người dùng
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  // Chọn người dùng để hiển thị dựa trên trang hiện tại
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="flex">
       <Sidebar />
@@ -393,12 +410,11 @@ export default function Users() {
                 <th className="py-2 px-4 border-b text-center">
                   Thời gian tạo
                 </th>
-                <th className="py-2 px-4 border-b text-center">Trạng thái</th>
                 <th className="py-2 px-4 border-b text-center">Hành động</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user: Admin) => (
+              {currentUsers.map((user: Admin) => (
                 <tr
                   key={user.id}
                   className={user.isBlocked ? "opacity-50" : ""}
@@ -421,16 +437,13 @@ export default function Users() {
                   </td>
                   <td className="py-2 px-4 border-b text-center">
                     {user.created_at}
-                  </td>
-                  <td className="py-2 px-4 border-b text-center">
-                    {user.status}
-                  </td>
+                  </td> 
                   <td className="py-2 px-4 border-b text-center">
                     <Button
                       className=" text-black py-1 px-2 rounded mr-2  border border-white bg-blue-200"
                       onClick={() => handleShow(user.id)}
                     >
-                      "Xem"
+                      Xem
                     </Button>
                     <span>
                       {user.status === 1 ? (
@@ -438,14 +451,14 @@ export default function Users() {
                           className=" text-black h-9 px-2 rounded bg-yellow-300"
                           onClick={() => handleUnBlock(user.id)}
                         >
-                          "Mở Khóa"
+                          Mở Khóa
                         </button>
                       ) : (
                         <button
                           className=" text-black h-9 px-2 rounded bg-red-400"
                           onClick={() => handleBlock(user.id)}
                         >
-                          "Khóa"
+                           Khóa
                         </button>
                       )}
                     </span>
@@ -466,6 +479,33 @@ export default function Users() {
               />
             </tbody>
           </table>
+          <Pagination className="mt-4 ml-[40pc]">
+            <Pagination.First
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+            />
+            <Pagination.Prev
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+            {Array.from({ length: totalPages }, (_, i) => (
+              <Pagination.Item
+                key={i + 1}
+                active={i + 1 === currentPage}
+                onClick={() => handlePageChange(i + 1)}
+              >
+                {i + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
+            <Pagination.Last
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+            />
+          </Pagination>
         </div>
       </div>
     </div>

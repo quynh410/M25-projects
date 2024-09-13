@@ -38,7 +38,7 @@ export default function Sidebar() {
         <div className="flex items-center justify-center mt-10">
           <img
             className="h-16 w-16 rounded-full"
-            src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/7f2366302a6a5fc11d69fc079eaf2f19.jpeg?lk3s=30310797&nonce=81524&refresh_token=c66c10deaafcbfa6beec7d45f1c908ff&x-expires=1725987600&x-signature=o0RAMZMAFlCFswriYCgh0zQIf6o%3D&shp=30310797&shcp=-"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJhS-Ip_NvxRr9bZiSrFRCeHPB8azuqCIXjA&usqp=CAUhttps://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/7f2366302a6a5fc11d69fc079eaf2f19.jpeg?lk3s=30310797&nonce=13370&refresh_token=14b2fadcf5851214f90fe7b8edeac931&x-expires=1726128000&x-signature=jvw6%2BNpjwazDPeDzi8W20cZh2XU%3D&shp=30310797&shcp=-"
             alt="Avatar"
           />
         </div>

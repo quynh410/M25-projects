@@ -24,3 +24,15 @@ export interface Account{
     fullname:string
     status:boolean
 }
+export interface Accounts{
+    email:string,
+    password:string
+}
+export interface AccountRe{
+    id:number,
+    name: string,
+    email: string,
+    password: string
+    address: string
+    card:[],
+}

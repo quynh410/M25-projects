@@ -4,7 +4,7 @@ export interface Products {
     categoryId:number,
     product_name:string,
     description:string,
-    unit_price:string,
+    unit_price:number,
     rating:string,
     stock_quantity:number,
     image:string,

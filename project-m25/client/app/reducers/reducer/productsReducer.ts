@@ -27,18 +27,21 @@ const productReducer = createSlice({
            })
         })
         .addCase(updateProducts.fulfilled ,(state, action)=>{
-            state.productDetail = action.payload;
+            state.productDetail = state.products.map((product) =>
+                product.id === action.payload.id ? action.payload : product
+              );
         })
         .addCase(addProducts.fulfilled,(state,action)=>{
             state.products.push(action.payload)
         })
         .addCase(getProductById.fulfilled ,(state, action)=>{
-            let index = state.products.findIndex((product:any)=>{
-                return product.product_id === action.payload.product_id
-            })
-            if(index!== -1){
-                state.products[index] = action.payload
-            }
+            // let index = state.products.findIndex((product:any)=>{
+            //     return product.product_id === action.payload.product_id
+            // })
+            // if(index!== -1){
+            //     state.products[index] = action.payload
+            // }
+            state.productDetail = action.payload
         })
     }
 })

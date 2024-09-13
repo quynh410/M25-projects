@@ -17,9 +17,10 @@ import Modal from "react-bootstrap/Modal";
 import { storage } from "@/config/config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export default function Products() {
+export default function Product() {
   const products = useSelector((state: any) => state.productsReducer.products);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
@@ -28,52 +29,49 @@ export default function Products() {
   const handleSearchProducts = () => {
     dispatch(searchProducts(search));
   };
-  // ----------------------------------------------------------------
 
   const [sortByname, setSortByName] = useState("");
   const handleSortByName = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const order = e.target.value;
     dispatch(sortProducts(order));
   };
-  // ----------------------------------------------------------------
-  const handleDelete = (id: number) => {
-    console.log(1111111111111, id);
 
+  const handleDelete = (id: number) => {
     alert("Muốn xóa ?");
     dispatch(deleteProducts(id));
   };
-  // ----------------------------------------------------------------
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [editMode, setEditMode] = useState(false);
   const handleShow = () => {
-    setEditMode(false); // Đặt lại chế độ thêm mới
-    setSelectedProduct(null); // Đặt lại sản phẩm đã chọn
+    setEditMode(false);
+    setSelectedProduct(null);
     setInputValue({
       product_name: "",
       image: "",
       unit_price: "",
       stock_quantity: "",
+      created_at: "",
     });
     setImage("https://vnsteelthanglong.vn/core/img/default_image.png");
     setShow(true);
   };
+
   const changeImage = async (e: any) => {
     let selectedImage = e.target.files?.[0];
     if (selectedImage) {
       const imageRef = ref(storage, `upload-image/${selectedImage.name}`);
       uploadBytes(imageRef, selectedImage).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
-
           setImage(url);
         });
       });
       const previewUrl = URL.createObjectURL(selectedImage);
-      setImage(previewUrl); // Hiển thị ảnh xem trước từ URL tạm thời
+      setImage(previewUrl);
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputValue({
@@ -81,6 +79,7 @@ export default function Products() {
       [name]: value,
     });
   };
+
   const handleEdit = (product: any) => {
     setSelectedProduct(product);
     setInputValue({
@@ -88,18 +87,20 @@ export default function Products() {
       image: product.image,
       unit_price: product.unit_price,
       stock_quantity: product.stock_quantity,
+      created_at: product.created_at,
     });
     setEditMode(true);
     setImage(product.image);
     setShow(true);
   };
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [inputValue, setInputValue] = useState({
     product_name: "",
     image: "",
     unit_price: "",
     stock_quantity: "",
+    created_at: "",
   });
 
   const [error, setError] = useState({
@@ -115,12 +116,14 @@ export default function Products() {
       image: "",
       unit_price: "",
       stock_quantity: "",
+      created_at: "",
     });
     setImage("https://vnsteelthanglong.vn/core/img/default_image.png");
   };
+
   const handleAddOrUpdateProduct = async () => {
     let valid = true;
-    let newError = { ...error }; // Tạo bản sao của đối tượng error
+    let newError = { ...error };
 
     if (!inputValue.product_name) {
       newError.product_name = "Tên sản phẩm không được để trống";
@@ -128,6 +131,7 @@ export default function Products() {
     } else {
       newError.product_name = "";
     }
+
     if (!inputValue.unit_price) {
       newError.unit_price = "Vui lòng nhập giá";
       valid = false;
@@ -142,33 +146,36 @@ export default function Products() {
       newError.stock_quantity = "";
     }
 
-    // Cập nhật state error mới
     setError(newError);
 
     if (valid) {
-      const newProduct = {
+      const updatedProduct = {
         product_name: inputValue.product_name,
         image: image,
         unit_price: Number(inputValue.unit_price),
         stock_quantity: Number(inputValue.stock_quantity),
+        created_at: inputValue.created_at,
       };
 
       try {
         if (editMode && selectedProduct) {
+          // Cập nhật sản phẩm
           await dispatch(
-            updateProducts({ id: selectedProduct.id, ...newProduct })
+            updateProducts({ id: selectedProduct.id, ...updatedProduct })
           );
         } else {
-          await dispatch(addProducts(newProduct));
+          // Thêm sản phẩm mới
+          await dispatch(addProducts(updatedProduct));
         }
-        dispatch(getAllProducts());
-        setShow(false); // Đóng modal khi thành công
-        reset(); // Reset form khi thành công
+        dispatch(getAllProducts()); // Cập nhật danh sách sản phẩm sau khi cập nhật hoặc thêm mới
+        setShow(false);
+        reset(); // Reset lại form
       } catch (error) {
-        console.error("Error adding product:", error);
+        console.error("Error adding or updating product:", error);
       }
     }
   };
+
   const [image, setImage] = useState(
     "https://vnsteelthanglong.vn/core/img/default_image.png"
   );
@@ -178,8 +185,6 @@ export default function Products() {
       const imageRef = ref(storage, `upload-image/${selectedImage.name}`);
       uploadBytes(imageRef, selectedImage).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
-
           setImage(url);
         });
       });
@@ -187,6 +192,19 @@ export default function Products() {
       setImage(previewUrl);
     }
   };
+
+  // Pagination setup
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
+  // Get current items for the page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <div className="flex">
       <Sidebar />
@@ -196,8 +214,6 @@ export default function Products() {
           <h2 className="text-2xl">Danh sách sản phẩm</h2>
           <div className="relative ml-auto flex gap-[20px]">
             <select
-              name=""
-              id=""
               className=" w-[100px] rounded border border-black "
               value={sortByname}
               onChange={handleSortByName}
@@ -240,7 +256,7 @@ export default function Products() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product: Products) => (
+            {currentItems.map((product: Products) => (
               <tr key={product.id}>
                 <td className="py-2 px-4 border-b text-center">{product.id}</td>
                 <td className="py-2 px-4 border-b text-center">
@@ -253,7 +269,12 @@ export default function Products() {
                   />
                 </td>
                 <td className="py-2 px-4 border-b text-center">
-                   <b>{product.unit_price}</b>
+                  <b>
+                    {product.unit_price.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </b>
                 </td>
                 <td className="py-2 px-4 border-b text-center">
                   {product.stock_quantity}
@@ -279,6 +300,26 @@ export default function Products() {
             ))}
           </tbody>
         </table>
+
+        {/* Pagination controls */}
+        <div className="flex justify-center mt-4">
+          {Array.from(
+            { length: Math.ceil(products.length / itemsPerPage) },
+            (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`mx-1 px-3 py-1 border ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-black"
+                }`}
+              >
+                {index + 1}
+              </button>
+            )
+          )}
+        </div>
       </div>
 
       <Modal show={show} onHide={handleClose} className="custom-small-modal">
@@ -296,7 +337,7 @@ export default function Products() {
                 className="w-full h-8 border border-black rounded px-2"
                 onChange={handleChange}
                 name="products_name"
-                // value={inputValue.product_name}
+                value={inputValue.product_name}
               />
             </div>
             {error.product_name && (
@@ -327,9 +368,9 @@ export default function Products() {
               <input
                 type="number"
                 className="w-full h-8 border border-black rounded px-2"
-                name="price"
+                name="unit_price"
                 onChange={handleChange}
-                // value={inputValue.unit_price}
+                value={inputValue.unit_price}
               />
             </div>
             {error.unit_price && (
@@ -337,15 +378,29 @@ export default function Products() {
                 {error.unit_price}
               </span>
             )}
-
+            <div className="flex items-center">
+              <label className="w-24">Thời gian:</label>
+              <input
+                type="date"
+                className="w-full h-8 border border-black rounded px-2"
+                name="created_at"
+                onChange={handleChange}
+                value={inputValue.created_at}
+              />
+            </div>
+            {error.stock_quantity && (
+              <span className="text-red-600 text-sm ml-24">
+                {error.stock_quantity}
+              </span>
+            )}
             <div className="flex items-center">
               <label className="w-24">Số lượng:</label>
               <input
                 type="number"
                 className="w-full h-8 border border-black rounded px-2"
-                name="code"
+                name="stock_quantity"
                 onChange={handleChange}
-                // value={inputValue.stock_quantity}
+                value={inputValue.stock_quantity}
               />
             </div>
             {error.stock_quantity && (

@@ -1,7 +1,10 @@
-"use client"
+"use client";
+import { AccountRe } from "@/app/interface/admin";
+import { addUser, getAllUser } from "@/app/services/admin/users.service";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // import { useDispatch, useSelector } from "react-redux";
 // import { User } from "../../interface/user";
 // import { addUser, getAllUser } from "../../services/admin/user.service";
@@ -16,118 +19,98 @@ function validateEmail(email: any) {
 }
 
 export default function Register() {
-//   const userState = useSelector((state: any) => state.userReducer.user);
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
+  const router = useRouter();
+  const resetData = () => {
+    setAccount({
+      id: 0,
+      name: "",
+      email: "",
+      password: "",
+      address: "",
+      card: [],
+      // status: 0,
+    });
+  };
+  const userState = useSelector((state: any) => state.userReducer.user);
+  const dispatch = useDispatch();
+  const [account, setAccount] = useState<AccountRe>({
+    id: Math.ceil(Math.random() * 10000000),
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    card: [],
+  });
+  const [errorAccount, setErrorAccount] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    card: [],
+  });
+  // Hàm đăng kí
+  const handleSubmit = async (e: React.FormEvent) => {
+    // Ngăn chặn load trang
+    e.preventDefault();
 
-//   useEffect(() => {
-//     dispatch(getAllUser());
-//   }, []);
-//   console.log(userState);
-//   const [user, setUsers] = useState<User>({
-//     id: Math.ceil(Math.random() * 100000),
-//     name: "",
-//     email: "",
-//     password: "",
-//     address:"",
-//     card:[]
-//   });
+    // Validate dữ liệu
+    let valid = true;
+    if (!account.name) {
+      errorAccount.name = "Tên không được để trống";
+      valid = false;
+    } else {
+      errorAccount.name = "";
+    }
 
-//   // Lỗi
-//   const [error, setError] = useState({
-//     name: "",
-//     email: "",
-//     password: "",
-//     address:"",
-//     card:[]
+    if (!account.email) {
+      errorAccount.email = "Email không được để trống";
+      valid = false;
+    } else if (!validateEmail(account.email)) {
+      errorAccount.email = "Email không đúng định dạng";
+      valid = false;
+    } else if (userState.some((item: any) => item.email === account.email)) {
+      errorAccount.email = "Email đã tồn tại";
+      valid = false;
+    } else {
+      errorAccount.email = "";
+    }
 
-//   });
+    if (!account.password) {
+      errorAccount.password = "Mật khẩu không được để trống";
+      valid = false;
+    } else {
+      errorAccount.password = "";
+    }
+    if (!account.address) {
+      errorAccount.address = "Địa chỉ không được để trống";
+      valid = false;
+    }else{
+      errorAccount.address = "";
+    }
 
-//   // const [username, setUsername] = useState<string>('');
-//   // const [email, setEmail] = useState<string>('');
-//   // const [password, setPassword] = useState<string>('');
-//   // const [errors, setErrors] = useState<{ username?: string; email?: string; password?: string }>({});
+    setErrorAccount({ ...errorAccount });
 
-//   // const validate = () => {
-//   //   const newErrors: { username?: string; email?: string; password?: string } = {};
-//   //   if (!username) {
-//   //     newErrors.username = "Username is required";
-//   //   }
-//   //   if (!email) {
-//   //     newErrors.email = "Email is required";
-//   //   } else if (!/\S+@\S+\.\S+/.test(email)) {
-//   //     newErrors.email = "Email address is invalid";
-//   //   }
-//   //   if (!password) {
-//   //     newErrors.password = "Password is required";
-//   //   } else if (password.length < 6) {
-//   //     newErrors.password = "Password must be at least 6 characters";
-//   //   }
-//   //   setErrors(newErrors);
-//   //   return Object.keys(newErrors).length === 0;
-//   // };
+    if (valid) {
+      const newUser = {
+        name: account.name,
+        email: account.email,
+        password: account.password,
+        address: account.address,
+      };
+      await dispatch(addUser(newUser));
+      await dispatch(getAllUser());
+      resetData();
+      router.push("/login")
+    }
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAccount({
+        ...account,
+        [name]: value
+    })
+}
 
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     let valid = true;
-
-//     if (!user.name) {
-//       error.name = "Tên không được để trống";
-//       valid = false;
-//     } else {
-//       error.name = "";
-//     }
-
-//     if (!user.email) {
-//       error.email = "Email không được để trống";
-//       valid = false;
-//     } else if (!validateEmail(user.email)) {
-//       error.email = "Email không đúng định dạng";
-//       valid = false;
-//     } else if (
-//       userState.some((existEmail: any) => existEmail.email === user.email)
-//     ) {
-//       error.email = "Email đã tồn tại";
-//       valid = false;
-//     } else {
-//       error.email = "";
-//     }
-
-//     if (!user.password) {
-//       error.password = "Mật khẩu không được để trống";
-//       valid = false;
-//     } else {
-//       error.password = "";
-//     }
-//     if(!user.address){
-//       error.address = "Địa chỉ không được để trống";
-//       valid = false;
-//     }else{
-//       error.address = "";
-//     }
-//     setError({ ...error });
-
-//     if (valid) {
-//       const newUser = {
-//         name: user.name,
-//         email: user.email,
-//         address: user.address,
-//         created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
-//         status: 0,
-//         password: user.password,
-//         card: [],
-//       };
-//       dispatch(addUser(newUser));
-//       dispatch(getAllUser());
-//       navigate("/login");
-//     }
-//   };
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setUsers({ ...user, [name]: value });
-//   };
   return (
     <div className="relative flex justify-center items-center min-h-screen bg-gray-200 overflow-hidden">
       <div
@@ -152,58 +135,63 @@ export default function Register() {
         </div>
         <div className="w-1/2">
           <h2 className="font-extrabold uppercase text-[30px] mb-6">Đăng Kí</h2>
-          <form >
+          <form onSubmit={handleSubmit} >
             <label htmlFor="username">Tên đăng nhập</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               type="text"
               placeholder="Enter your username"
               name="name"
-             
+              value={account.name}
+              onChange={handleChange}
             />
-          
+            <div className="h-[24px]">
+              {errorAccount.name && (
+                <p className="text-red-500 text-sm">{errorAccount.name}</p>
+              )}
+            </div>
             <label htmlFor="email">E-Mail</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               type="text"
               placeholder="Enter your email"
               name="email"
-            //   value={user.email}
-            //   onChange={handleChange}
+                value={account.email}
+              onChange={handleChange}
             />
-            {/* <div className="h-[24px]">
-              {error.email && (
-                <p className="text-red-500 text-sm">{error.email}</p>
+            <div className="h-[24px]">
+              {errorAccount.email && (
+                <p className="text-red-500 text-sm">{errorAccount.email}</p>
               )}
-            </div> */}
+            </div>
             <label htmlFor="password">Password</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               type="password"
               placeholder="Enter your password"
               name="password"
-            //   value={user.password}
-            //   onChange={handleChange}
+                value={account.password}
+              onChange={handleChange}
             />
-            {/* <div className="h-[24px]">
-              {error.password && (
-                <p className="text-red-500 text-sm">{error.password}</p>
+            <div className="h-[24px]">
+              {errorAccount.password && (
+                <p className="text-red-500 text-sm">{errorAccount.password}</p>
               )}
-            </div> */}
+            </div>
             <label htmlFor="password">Address</label> <br />
             <input
               className="border-2 border-zinc-600 rounded-[5px] w-full h-[40px] mb-1"
               type="text"
               placeholder="Enter your Address"
               name="address"
-            //   value={user.address}
-            //   onChange={handleChange}
+                value={account.address}
+              onChange={handleChange}
             />
-            {/* <div className="h-[24px]">
-              {error.password && (
-                <p className="text-red-500 text-sm">{error.address}</p>
+            <div className="h-[24px]">
+              {errorAccount.address && (
+                <p className="text-red-500 text-sm">{errorAccount.address}</p>
               )}
-            </div> */}
+            </div>
             <button
               type="submit"
               className="bg-blue-600 border-none rounded text-white w-full h-[40px] mb-6"

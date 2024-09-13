@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "./services/admin/products.service";
 import { Products } from "./interface/products";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const products = useSelector((state: any) => state.productsReducer.products);
@@ -39,6 +40,22 @@ export default function Home() {
   const toggleForm = () => {
     setIsOpen(!isOpen);
   };
+  // --------------------
+  const route = useRouter();
+  const handleDetail = (id: number) => {
+    route.push(`/detailProducts/${id}`);
+  };
+  // ----------------------------------------------------------------
+  const [account, setAccount] = useState(
+    JSON.parse(localStorage.getItem("account") || "null")
+  );
+  console.log(111111111111111, account);
+
+  const handleLogout = () => {
+    localStorage.removeItem("account");
+    setAccount(null);
+    route.push("/login"); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
+  };
   return (
     <>
       <div className="relative ">
@@ -53,12 +70,42 @@ export default function Home() {
           </div>
           <div className="flex gap-4 mr-8">
             <i className="fa-solid fa-magnifying-glass"></i>
-            <i className="fa-regular fa-user" onClick={toggleForm}></i>
+
+            <i className="fa-regular fa-user" onClick={toggleForm}>
+              {" "}
+              {account ? (
+                <b className="font-sans">{account.name}</b>
+              ) : (
+                <b className="font-sans"></b>
+              )}
+            </i>
+
             {isOpen && (
               <div className="absolute mt-[20px] mr-11 p-2 b rounded shadow-lg">
-              <a className="block no-underline text-black hover:text-gray-200 cursor-pointer">Đăng Nhập</a>
-              <a className="block no-underline text-black hover:text-gray-200 cursor-pointer">Đăng Ký</a>
-          </div>
+                {account ? (
+                  <button
+                    onClick={handleLogout}
+                    className="block no-underline text-black hover:text-gray-200 cursor-pointer"
+                  >
+                    Đăng Xuất
+                  </button>
+                ) : (
+                  <>
+                    <a
+                      href="/login"
+                      className="block no-underline text-black hover:text-gray-200 cursor-pointer"
+                    >
+                      Đăng Nhập
+                    </a>
+                    <a
+                      href="/register"
+                      className="block no-underline text-black hover:text-gray-200 cursor-pointer"
+                    >
+                      Đăng Ký
+                    </a>
+                  </>
+                )}
+              </div>
             )}
             <i className="fa-solid fa-cart-shopping"></i>
           </div>
@@ -189,17 +236,26 @@ export default function Home() {
                 <div className="text-yellow-500 text-sm mt-2">
                   {product.rating}
                 </div>
-                <a href="/detailProducts" className="text-lg font-semibold mt-1">
+                <h2
+                  onClick={() => handleDetail(product.id)}
+                  className="text-lg font-semibold mt-1 text-black no-underline hover:text-gray-300"
+                >
                   {product.product_name}
-                </a>
+                </h2>
                 <div className="text-xl font-bold mt-2">
-                  {product.unit_price}
+                  {product.unit_price.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
                 </div>
                 {product.unit_price && (
                   <div className="text-red-500 text-sm mt-1">
                     {product.discount}
                     <span className="line-through text-gray-600">
-                      {product.unit_price}
+                      {product.unit_price.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
                     </span>
                   </div>
                 )}
