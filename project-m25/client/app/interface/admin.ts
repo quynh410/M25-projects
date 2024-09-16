@@ -30,8 +30,10 @@ export interface Accounts{
 }
 export interface AccountRe{
     id:number,
-    name: string,
+    username: string,
     email: string,
+    phone:string,
+    fullname:string,
     password: string
     address: string
     card:[],

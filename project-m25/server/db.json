@@ -12,7 +12,7 @@
       "username": "Quynh",
       "email": "quynh@gmail.com",
       "fullname": "Nguyễn Thị Thu Quỳnh",
-      "status": 1,
+      "status": 0,
       "password": "hashed_password",
       "role": true,
       "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
@@ -65,7 +65,7 @@
       "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
       "phone": "56765432",
       "fullname": "Hoàng Lan Anh",
-      "status": true,
+      "status": 0,
       "id": 7
     },
     {
@@ -76,7 +76,7 @@
       "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
       "phone": "098765434567",
       "fullname": "Huyền",
-      "status": true,
+      "status": 0,
       "id": 8
     },
     {
@@ -87,15 +87,29 @@
       "avatar": "https://scontent.fhan18-1.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=VVXDQ2ftWTsQ7kNvgEsTadt&_nc_ht=scontent.fhan18-1.fna&_nc_gid=AXp3jmeNWjNNYIBHePTAf1C&oh=00_AYDz8-sNB58RG9XND9CXST7E2TwhmKQT842F2Wnbd1CajQ&oe=6701DFBA",
       "phone": "2345678",
       "fullname": "Hoàng Phúc",
-      "status": true,
+      "card": [],
+      "status": 0,
       "id": 9
     },
     {
-      "name": "Quynhh",
+      "name": "Quynh",
       "email": "quynhhhhhh07@gmail.com",
       "password": "123456",
       "address": "HN",
-      "id": 12
+      "card": [],
+      "fullname": "Nguyen Thi Thu Quynh",
+      "phone": "0986532457",
+      "id": 10
+    },
+    {
+      "name": "NN",
+      "email": "nn@gmail.com",
+      "password": "123456",
+      "address": "HN",
+      "card": [],
+      "fullname": "NN",
+      "phone": "09876543",
+      "id": 11
     }
   ],
   "categories": [
@@ -123,8 +137,12 @@
       "id": 1,
       "product_name": "Aliquam Quaerat",
       "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/02-278x320.jpg",
-      "unit_price": 108.8,
-      "stock_quantity": 51,
+      "unit_price": 1112.09,
+      "rating": "★★★★★",
+      "brand": "Canon",
+      "availability": "1 Day",
+      "product_code": "Product 1",
+      "stock_quantity": 33,
       "created_at": "2024-09-15"
     },
     {
@@ -132,6 +150,10 @@
       "product_name": "Consectetur Hampden",
       "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
       "unit_price": 110,
+      "rating": "★★★★★",
+      "brand": "Plam",
+      "product_code": "Product 2",
+      "availability": "1 weeks",
       "stock_quantity": 30,
       "created_at": "2024-09-08"
     },
@@ -297,46 +319,267 @@
       "discount": "4% Off",
       "rating": "★★★★☆",
       "brand": "Canon",
-      "product_code": "Product 18",
-      "availability": "In Stock",
+      "product_code": "Product 12",
+      "availability": "1_2 Days",
       "stock_quantity": 10,
       "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/15-278x320.jpg",
       "created_at": "29/08/2024"
+    },
+    {
+      "product_name": "dfkjds",
+      "rating": "★★★★☆",
+      "product_code": "Product 12",
+      "availability": "1_2 Days",
+      "image": "",
+      "unit_price": 654,
+      "stock_quantity": 1212,
+      "created_at": "2024-09-12",
+      "id": 13
+    }
+  ],
+  "cart": [
+    {
+      "user_id": 10,
+      "products": {
+        "id": 2,
+        "product_name": "Consectetur Hampden",
+        "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
+        "unit_price": 110,
+        "rating": "★★★★★",
+        "brand": "Plam",
+        "product_code": "Product 2",
+        "availability": "1 weeks",
+        "stock_quantity": 30,
+        "created_at": "2024-09-08",
+        "quantity": 1
+      },
+      "id": 1
     }
   ],
   "orders": [
     {
-      "order_id": 1,
-      "serial_number": "ORD001",
-      "user_id": 1,
-      "order_at": "05/09/2024",
-      "total_price": 1599.98,
-      "status": 1,
-      "note": "Please deliver between 9 AM and 5 PM",
+      "order_id": 51,
+      "user_id": 10,
+      "total_price": 642,
       "order_details": [
         {
-          "order_detail_id": 1,
-          "product_id": 1,
-          "name": "Aliquam Quaerat",
-          "unit_price": 799.99,
-          "order_quantity": 2
+          "user_id": 10,
+          "products": {
+            "id": 2,
+            "product_name": "Consectetur Hampden",
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
+            "unit_price": 110,
+            "rating": "★★★★★",
+            "brand": "Plam",
+            "product_code": "Product 2",
+            "availability": "1 weeks",
+            "stock_quantity": 30,
+            "created_at": "2024-09-08",
+            "quantity": 5
+          },
+          "id": 4
+        },
+        {
+          "user_id": 10,
+          "products": {
+            "id": 6,
+            "product_id": 1006,
+            "categoryId": 2,
+            "product_name": "Laudant Doloremque",
+            "description": "This is the description for product 6.",
+            "unit_price": 92,
+            "discount": "5% Off",
+            "rating": "★★★★★",
+            "brand": "Canon",
+            "product_code": "Product 9",
+            "availability": "In days",
+            "stock_quantity": 3,
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/08-278x320.jpg",
+            "created_at": "04/09/2024",
+            "update_at": "06/09/2024",
+            "quantity": 1
+          },
+          "id": 5
         }
       ],
-      "receive_name": "Nguyen Van A",
-      "receive_address": "123 Street, Hanoi",
-      "receive_phone": "0123456789",
-      "created_at": "05/09/2024",
-      "updated_at": "05/09/2024"
+      "receive_name": "Quynh",
+      "receive_address": "HN",
+      "receive_phone": "09876548765",
+      "id": 1
+    },
+    {
+      "order_id": 88,
+      "user_id": 10,
+      "total_price": 642,
+      "order_details": [
+        {
+          "user_id": 10,
+          "products": {
+            "id": 2,
+            "product_name": "Consectetur Hampden",
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
+            "unit_price": 110,
+            "rating": "★★★★★",
+            "brand": "Plam",
+            "product_code": "Product 2",
+            "availability": "1 weeks",
+            "stock_quantity": 30,
+            "created_at": "2024-09-08",
+            "quantity": 5
+          },
+          "id": 4
+        },
+        {
+          "user_id": 10,
+          "products": {
+            "id": 6,
+            "product_id": 1006,
+            "categoryId": 2,
+            "product_name": "Laudant Doloremque",
+            "description": "This is the description for product 6.",
+            "unit_price": 92,
+            "discount": "5% Off",
+            "rating": "★★★★★",
+            "brand": "Canon",
+            "product_code": "Product 9",
+            "availability": "In days",
+            "stock_quantity": 3,
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/08-278x320.jpg",
+            "created_at": "04/09/2024",
+            "update_at": "06/09/2024",
+            "quantity": 1
+          },
+          "id": 5
+        }
+      ],
+      "receive_name": "5454545",
+      "receive_address": "12121212",
+      "receive_phone": "223232323",
+      "id": 2
+    },
+    {
+      "order_id": 63,
+      "user_id": 10,
+      "total_price": 1222.09,
+      "order_details": [
+        {
+          "user_id": 10,
+          "products": {
+            "id": 1,
+            "product_name": "Aliquam Quaerat",
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/02-278x320.jpg",
+            "unit_price": 1112.09,
+            "rating": "★★★★★",
+            "brand": "Canon",
+            "availability": "1 Day",
+            "product_code": "Product 1",
+            "stock_quantity": 33,
+            "created_at": "2024-09-15",
+            "quantity": 1
+          },
+          "id": 1
+        },
+        {
+          "user_id": 10,
+          "products": {
+            "id": 2,
+            "product_name": "Consectetur Hampden",
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/04-278x320.jpg",
+            "unit_price": 110,
+            "rating": "★★★★★",
+            "brand": "Plam",
+            "product_code": "Product 2",
+            "availability": "1 weeks",
+            "stock_quantity": 30,
+            "created_at": "2024-09-08",
+            "quantity": 1
+          },
+          "id": 2
+        }
+      ],
+      "receive_name": "Quynhh",
+      "receive_address": "12212Hn",
+      "receive_phone": "08982613387",
+      "id": 3
+    },
+    {
+      "order_id": 28,
+      "user_id": 10,
+      "total_price": 221.99,
+      "order_details": [
+        {
+          "user_id": 10,
+          "products": {
+            "id": 6,
+            "product_id": 1006,
+            "categoryId": 2,
+            "product_name": "Laudant Doloremque",
+            "description": "This is the description for product 6.",
+            "unit_price": 92,
+            "discount": "5% Off",
+            "rating": "★★★★★",
+            "brand": "Canon",
+            "product_code": "Product 9",
+            "availability": "In days",
+            "stock_quantity": 3,
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/08-278x320.jpg",
+            "created_at": "04/09/2024",
+            "update_at": "06/09/2024",
+            "quantity": 1
+          },
+          "id": 1
+        },
+        {
+          "user_id": 10,
+          "products": {
+            "id": 8,
+            "product_id": 1008,
+            "categoryId": 2,
+            "product_name": "Nostrud Exerciation",
+            "description": "This is the description for product 8.",
+            "unit_price": 129.99,
+            "discount": "15% Off",
+            "rating": "★☆☆☆☆",
+            "brand": "Palm",
+            "product_code": "Product 11",
+            "availability": "In days",
+            "stock_quantity": 10,
+            "image": "https://capricathemes.com/opencart/OPC02/OPC020033/image/cache/catalog/11-278x320.jpg",
+            "created_at": "02/09/2024",
+            "update_at": "04/09/2024",
+            "quantity": 1
+          },
+          "id": 2
+        }
+      ],
+      "receive_name": "Lal",
+      "receive_address": "12Hn",
+      "receive_phone": "0876567656",
+      "id": 4
     }
   ],
-  "order_details": [
+  "wishlist": [
     {
-      "order_detail_id": 1,
-      "product_id": 1,
-      "name": "Smartphone",
-      "unit_price": 799.99,
-      "order_quantity": 2,
-      "order_id": 1
+      "id": 1,
+      "userId": 1,
+      "product": {
+        "id": 1,
+        "product_name": "Art Piece A",
+        "unit_price": 100,
+        "brand": "BrandA",
+        "image": "https://example.com/product1.jpg"
+      }
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "product": {
+        "id": 2,
+        "product_name": "Art Piece B",
+        "unit_price": 150,
+        "brand": "BrandB",
+        "image": "https://example.com/product2.jpg"
+      }
     }
   ]
 }

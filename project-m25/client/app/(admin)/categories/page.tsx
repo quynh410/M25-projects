@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../header/page";
 import Sidebar from "../sidebar/page";
 import { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import {
   getAllCate,
   deleteCate,
   addCate,
+  upadateCate,
 } from "@/app/services/admin/categories.service";
 import {
   Sheet,
@@ -18,10 +21,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
 import { Categories } from "@/app/interface/categories";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import Button from "react-bootstrap/esm/Button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -115,6 +116,119 @@ export default function Categorie() {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
+  const handleUpdateCate = async () => {
+    const newCategories = {
+      id: input.id,
+      category_id: input.category_id,
+      category_name: input.category_name,
+      description: input.description,
+      created_at: input.created_at,
+    };
+    try {
+      await dispatch(addCate(newCategories));
+      dispatch(getAllCate());
+      setShowModal(false);
+      setSelectedCategoryId(null);
+      resetInput();
+    } catch (err) {
+      console.log("ERR", err);
+    }
+  };
+  // ----------------------------
+  const [show, setShow] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setSelect(null);
+    setInput({
+      id: 0,
+      category_id: 0,
+      category_name: "",
+      description: "",
+      created_at: "",
+    });
+    setEditModal(false); // This is for adding new category
+    setShow(true);
+  };
+  const [select, setSelect] = useState<any>(null);
+  const handleUpdateCategory = (category: any) => {
+    setSelect(category);
+    setInput({
+      id: category.id,
+      category_id: category.category_id,
+      category_name: category.category_name,
+      description: category.description,
+      created_at: category.created_at,
+    });
+    setEditModal(true); // This is for editing existing category
+    setShow(true);
+  };
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
+  const handleAddOrEditCategory = async () => {
+    let valid = true;
+    let newErr = { ...err };
+
+    // Validate inputs
+    if (!input.category_name) {
+      newErr.category_name = "Tên danh mục không được để trống";
+      valid = false;
+    } else {
+      newErr.category_name = "";
+    }
+
+    if (!input.description) {
+      newErr.description = "Nhận xét không được để trống";
+      valid = false;
+    } else {
+      newErr.description = "";
+    }
+
+    if (!input.created_at) {
+      newErr.created_at = "Ngày tạo không được để trống";
+      valid = false;
+    } else {
+      newErr.created_at = "";
+    }
+
+    setErr(newErr);
+
+    if (valid) {
+      const categoryData = {
+        category_name: input.category_name,
+        description: input.description,
+        created_at: input.created_at,
+      };
+
+      try {
+        if (editModal && select) {
+          // If editing, dispatch update action
+          await dispatch(upadateCate({ id: select.id, ...categoryData }));
+        } else {
+          // If adding, dispatch add action
+          await dispatch(addCate(categoryData));
+        }
+
+        // Fetch updated list of categories
+        dispatch(getAllCate());
+
+        // Close the modal and reset the form
+        setShow(false);
+        setInput({
+          id: 0,
+          category_id: 0,
+          category_name: "",
+          description: "",
+          created_at: "",
+        });
+      } catch (err) {
+        console.error("Lỗi khi xử lý danh mục", err);
+      }
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar />
@@ -183,7 +297,7 @@ export default function Categorie() {
                       onChange={handleChange}
                       className="col-span-3 border border-black rounded h-[35px]"
                     />
-                    
+
                     {err.created_at && (
                       <p className="text-red-500 text-xs ml-[102px]">
                         {err.created_at}
@@ -229,9 +343,79 @@ export default function Categorie() {
                     {category.created_at}
                   </td>
                   <td className="py-2 px-4 border-b text-center">
-                    <button className="bg-blue-500 text-white py-1 px-2 rounded mr-2">
+                    {/* <button
+                      className="bg-blue-500 text-white py-1 px-2 rounded mr-2"
+                      onClick={() => handleUpdateCate()}
+                    >
                       Sửa
-                    </button>
+                    </button> */}
+                    <Button
+                      className="bg-blue-500 text-white py-1 px-2 rounded mr-2"
+                      onClick={() => handleUpdateCategory(category)}
+                    >
+                      Sửa
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>
+                          {editModal ? "Sửa Danh mục" : "Thêm Danh mục"}
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <label className="block font-medium text-gray-700">
+                          Tên:
+                        </label>
+                        <input
+                          type="text"
+                          name="category_name"
+                          className="border border-black rounded p-2 mb-4 w-full"
+                          value={input.category_name}
+                          onChange={handleInputChange}
+                        />
+                        {err.category_name && (
+                          <p className="text-red-500">{err.category_name}</p>
+                        )}
+
+                        <label className="block font-medium text-gray-700">
+                          Mô tả:
+                        </label>
+                        <input
+                          type="text"
+                          name="description"
+                          className="border border-black rounded p-2 mb-4 w-full"
+                          value={input.description}
+                          onChange={handleInputChange}
+                        />
+                        {err.description && (
+                          <p className="text-red-500">{err.description}</p>
+                        )}
+
+                        <label className="block font-medium text-gray-700">
+                          Ngày tạo:
+                        </label>
+                        <input
+                          type="date"
+                          name="created_at"
+                          className="border border-black rounded p-2 w-full"
+                          value={input.created_at}
+                          onChange={handleInputChange}
+                        />
+                        {err.created_at && (
+                          <p className="text-red-500">{err.created_at}</p>
+                        )}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button
+                          variant="primary"
+                          onClick={handleAddOrEditCategory}
+                        >
+                          {editModal ? "Save Changes" : "Add Category"}
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded"
                       onClick={() => handleDelete(category.id)}

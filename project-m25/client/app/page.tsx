@@ -16,6 +16,8 @@ import { Products } from "./interface/products";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const account = JSON.parse(localStorage.getItem("account") || "[]");
+
   const products = useSelector((state: any) => state.productsReducer.products);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,15 +48,21 @@ export default function Home() {
     route.push(`/detailProducts/${id}`);
   };
   // ----------------------------------------------------------------
-  const [account, setAccount] = useState(
+  const [accounts, setAccounts] = useState(
     JSON.parse(localStorage.getItem("account") || "null")
   );
   console.log(111111111111111, account);
 
   const handleLogout = () => {
     localStorage.removeItem("account");
-    setAccount(null);
-    route.push("/login"); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
+    setAccounts(null);
+    router.push("/login"); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
+  };
+  // -----------------------------------
+  const router = useRouter();
+  const cart = useSelector((state: any) => state.cartReducer.cart);
+  const handleClick = (id: number) => {
+    router.push(`/addToCard/${id}`);
   };
   return (
     <>
@@ -63,7 +71,12 @@ export default function Home() {
           <h1 className="ml-8">MINIMOSA.</h1>
           <div className="flex gap-16 mr-[40px] font-medium ">
             <a>Home</a>
-            <a>Sculpture</a>
+            <a
+              href="/wishList"
+              className="text-black no-underline hover:text-gray-300"
+            >
+              Favorites
+            </a>
             <a>Pages</a>
             <a>Shop</a>
             <a>More</a>
@@ -107,7 +120,17 @@ export default function Home() {
                 )}
               </div>
             )}
-            <i className="fa-solid fa-cart-shopping"></i>
+            <div className="relative inline-block">
+              <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-black rounded-full w-[20px] h-[20px] text-white text-center text-[14px] flex items-center justify-center">
+                {cart.length}
+              </div>
+              <a href="/addToCart">
+              <button onClick={() => handleClick(accounts.id)}>
+                <i className="fa-solid fa-cart-shopping cursor-pointer text-black"></i>
+              </button>
+
+              </a>
+            </div>
           </div>
         </div>
         <div>

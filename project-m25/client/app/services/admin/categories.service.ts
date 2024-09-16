@@ -17,3 +17,9 @@ export const addCate:any = createAsyncThunk("categories/addCate", async (cate:an
     let response = await axios.post(`http://localhost:8080/categories`,cate)
     return response.data;
 })
+export const upadateCate:any = createAsyncThunk("categories/upadateCate",
+    async(cate:any,data)=>{
+        let response = await axios.put(`http://localhost:8080/categories/${cate.id}`,cate)
+        return response.data;
+    }
+)

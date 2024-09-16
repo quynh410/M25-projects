@@ -39,6 +39,7 @@ export default function Product() {
   const handleDelete = (id: number) => {
     alert("Muốn xóa ?");
     dispatch(deleteProducts(id));
+    dispatch(getAllProducts());
   };
 
   const [show, setShow] = useState(false);
@@ -50,6 +51,7 @@ export default function Product() {
     setInputValue({
       product_name: "",
       image: "",
+      brand: "",
       unit_price: "",
       stock_quantity: "",
       created_at: "",
@@ -57,18 +59,19 @@ export default function Product() {
     setImage("https://vnsteelthanglong.vn/core/img/default_image.png");
     setShow(true);
   };
-
   const changeImage = async (e: any) => {
     let selectedImage = e.target.files?.[0];
     if (selectedImage) {
       const imageRef = ref(storage, `upload-image/${selectedImage.name}`);
       uploadBytes(imageRef, selectedImage).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url);
+
           setImage(url);
         });
       });
       const previewUrl = URL.createObjectURL(selectedImage);
-      setImage(previewUrl);
+      setImage(previewUrl); // Hiển thị ảnh xem trước từ URL tạm thời
     }
   };
 
@@ -86,6 +89,7 @@ export default function Product() {
       product_name: product.product_name,
       image: product.image,
       unit_price: product.unit_price,
+      brand: product.brand,
       stock_quantity: product.stock_quantity,
       created_at: product.created_at,
     });
@@ -99,6 +103,7 @@ export default function Product() {
     product_name: "",
     image: "",
     unit_price: "",
+    brand: "",
     stock_quantity: "",
     created_at: "",
   });
@@ -107,6 +112,7 @@ export default function Product() {
     product_name: "",
     image: "",
     unit_price: "",
+    brand: "",
     stock_quantity: "",
   });
 
@@ -114,6 +120,7 @@ export default function Product() {
     setInputValue({
       product_name: "",
       image: "",
+      brand: "",
       unit_price: "",
       stock_quantity: "",
       created_at: "",
@@ -138,7 +145,12 @@ export default function Product() {
     } else {
       newError.unit_price = "";
     }
-
+    if (!inputValue.brand) {
+      newError.brand = "Vui lòng nhập tên thương hiệu";
+      valid = false;
+    } else {
+      newError.brand = "";
+    }
     if (!inputValue.stock_quantity) {
       newError.stock_quantity = "Vui lòng nhập số lượng";
       valid = false;
@@ -151,7 +163,10 @@ export default function Product() {
     if (valid) {
       const updatedProduct = {
         product_name: inputValue.product_name,
-        image: image,
+        rating: "★★★★☆",
+        product_code: "Product 12",
+        availability: "1_2 Days",
+        image: inputValue.image,
         unit_price: Number(inputValue.unit_price),
         stock_quantity: Number(inputValue.stock_quantity),
         created_at: inputValue.created_at,
@@ -179,20 +194,6 @@ export default function Product() {
   const [image, setImage] = useState(
     "https://vnsteelthanglong.vn/core/img/default_image.png"
   );
-  const handleChangeImage = async (e: any) => {
-    let selectedImage = e.target.files?.[0];
-    if (selectedImage) {
-      const imageRef = ref(storage, `upload-image/${selectedImage.name}`);
-      uploadBytes(imageRef, selectedImage).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          setImage(url);
-        });
-      });
-      const previewUrl = URL.createObjectURL(selectedImage);
-      setImage(previewUrl);
-    }
-  };
-
   // Pagination setup
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -336,7 +337,7 @@ export default function Product() {
                 type="text"
                 className="w-full h-8 border border-black rounded px-2"
                 onChange={handleChange}
-                name="products_name"
+                name="product_name"
                 value={inputValue.product_name}
               />
             </div>
@@ -363,6 +364,21 @@ export default function Product() {
               />
             )}
 
+            <div className="flex items-center">
+              <label className="w-24">Brand:</label>
+              <input
+                type="text"
+                className="w-full h-8 border border-black rounded px-2"
+                name="brand"
+                onChange={handleChange}
+                value={inputValue.brand}
+              />
+            </div>
+            {error.unit_price && (
+              <span className="text-red-600 text-sm ml-24">
+                {error.unit_price}
+              </span>
+            )}
             <div className="flex items-center">
               <label className="w-24">Giá:</label>
               <input

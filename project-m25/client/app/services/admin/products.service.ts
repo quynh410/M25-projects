@@ -26,7 +26,7 @@ export const deleteProducts:any = createAsyncThunk("products/deleteProduct",
 })
 // sửa 
     export const updateProducts:any = createAsyncThunk("products/updateProduct", async (product: any) => {
-        let response =  await axios.put(`http://localhost:8080/products/${product.id}`, product);
+        let response =  await axios.patch(`http://localhost:8080/products/${product.id}`, product);
         return response.data;
 })
  // thêm
